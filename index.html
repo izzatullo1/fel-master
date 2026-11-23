@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Fe'l Master</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101827;color:#fff;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+header{padding:24px 20px;background:#192840}h1{margin:0}main{max-width:520px;margin:auto;padding:18px}
+.card{background:#20314b;border:1px solid #354966;border-radius:18px;padding:20px;margin:14px 0}
+button{background:#3979f6;color:white;border:0;border-radius:12px;padding:15px;font-size:16px;font-weight:650;cursor:pointer}
+button:disabled{opacity:.4}.full{width:100%;margin-top:10px}.option{width:100%;margin:6px 0;text-align:left;background:#344967}
+.correct{background:#168653!important}.wrong{background:#ad414b!important}.muted{color:#a9b9d0}
+.big{font-size:32px;font-weight:bold;margin:20px 0}.hidden{display:none}
+.progress{height:7px;background:#354966;border-radius:9px;margin:15px 0}.bar{height:100%;background:#54c1ff;width:0;border-radius:9px}
+input{width:100%;padding:15px;background:#101827;border:1px solid #60738f;color:white;border-radius:12px;font-size:20px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.chip{background:#344967;padding:12px;border-radius:9px}
+</style>
+</head>
+<body>
+<header><h1>📘 Fe'l Master</h1><p class="muted">Inglizcha fe'llarni 5 bosqichda yodla</p></header>
+<main>
+<section id="home">
+<div class="card"><h3>O'rganish jarayoni</h3><div class="progress"><div class="bar" id="totalbar"></div></div><p id="total" class="muted"></p></div>
+<div id="levels"></div>
+<div class="card"><h3>📊 Natijalar</h3><p id="stats"></p><button class="full" onclick="resetAll()">Natijalarni tozalash</button></div>
+</section>
+<section id="game" class="hidden">
+<button onclick="home()">← Orqaga</button><div class="progress"><div class="bar" id="bar"></div></div>
+<p id="levelname" class="muted"></p><div class="card" id="question"></div><p id="feedback"></p><div id="actions"></div>
+</section>
+</main>
+<script>
+const verbs=[
+["sleep","slept","slept","uxlamoq"],["go","went","gone","bormoq"],
+["eat","ate","eaten","yemoq"],["see","saw","seen","ko'rmoq"],
+["speak","spoke","spoken","gapirmoq"],["give","gave","given","bermoq"],
+["take","took","taken","olmoq"],["write","wrote","written","yozmoq"],
+["drink","drank","drunk","ichmoq"],["come","came","come","kelmoq"]
+];
+const names=["1-bosqich · Yodlash","2-bosqich · O'zbekchadan inglizchaga","3-bosqich · Inglizchadan o'zbekchaga","4-bosqich · Harflarni tartiblash","5-bosqich · O'zing yoz"];
+const initial={done:[false,false,false,false,false],scores:[0,0,0,0,0]};
+let data;
+try{data=JSON.parse(localStorage.getItem("felmaster"))||structuredClone(initial)}catch(e){data=JSON.parse(JSON.stringify(initial))}
+let stage=0,index=0,order=[],answered=false,chosen=[],letters=[];
+function save(){localStorage.setItem("felmaster",JSON.stringify(data))}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function home(){
+document.getElementById("home").classList.remove("hidden");document.getElementById("game").classList.add("hidden");
+const n=data.done.filter(Boolean).length;document.getElementById("total").textContent=n*10+" / 50 ta mashq";document.getElementById("totalbar").style.width=(n*20)+"%";
+document.getElementById("levels").innerHTML=names.map((name,i)=>`<div class="card"><h3>${name} ${data.done[i]?"✅":""}</h3><p class="muted">${data.done[i]?"Bajarildi":i===0||data.done[i-1]?"10 ta savol":"Avval oldingi bosqichni tugating"}</p><button class="full" ${i>0&&!data.done[i-1]?"disabled":""} onclick="start(${i})">${data.done[i]?"Qayta mashq":"Boshlash"}</button></div>`).join("");
+document.getElementById("stats").textContent="Bajarilgan bosqichlar: "+n+"/5 · To'g'ri javoblar: "+data.scores.reduce((a,b)=>a+b,0);
+}
+function start(s){stage=s;index=0;order=shuffle(verbs);document.getElementById("home").classList.add("hidden");document.getElementById("game").classList.remove("hidden");next()}
+function next(){
+if(index>=10){finish();return}
+answered=false;chosen=[];const v=order[index],q=document.getElementById("question");
+document.getElementById("levelname").textContent=names[stage];document.getElementById("bar").style.width=(index*10)+"%";document.getElementById("feedback").textContent="";document.getElementById("actions").innerHTML="";
+if(stage===0){q.innerHTML=`<p class="muted">FE'L ${index+1}/10</p><div class="big">${v[0]}</div><h3>V1 — ${v[0]}</h3><h3>V2 — ${v[1]}</h3><h3>V3 — ${v[2]}</h3><hr><h2>${v[3]}</h2>`;document.getElementById("actions").innerHTML='<button class="full" onclick="advance()">Keyingisi →</button>';return}
+if(stage===1||stage===2){
+const prompt=stage===1?v[3]:v[0],correct=stage===1?v[0]:v[3],options=shuffle([v,...shuffle(verbs.filter(x=>x!==v)).slice(0,2)]);
+q.innerHTML=`<p class="muted">SAVOL ${index+1}/10</p><div class="big">${prompt}</div><p class="muted">To'g'ri javobni tanlang</p>`+options.map(x=>`<button class="option" onclick="answer(this,'${stage===1?x[0]:x[3]}','${correct}')">${stage===1?x[0]:x[3]}</button>`).join("");return
+}
+if(stage===3){
+letters=shuffle(v[0].split("").map((l,i)=>({l,i})));q.innerHTML=`<p class="muted">SAVOL ${index+1}/10</p><div class="big">${v[3]}</div><p>Harflarni to'g'ri tartiblang:</p><div id="picked" class="chips"></div><div class="chips" id="choices"></div><button class="full" onclick="clearLetters()">Tozalash</button>`;
+letters.forEach((x,i)=>{const b=document.createElement("button");b.className="chip";b.textContent=x.l;b.onclick=()=>pick(i,b);document.getElementById("choices").appendChild(b)});return
+}
+q.innerHTML=`<p class="muted">SAVOL ${index+1}/10</p><div class="big">${v[3]}</div><p>Inglizcha V1 ni yozing:</p><input id="typed" placeholder="Javob..." autocapitalize="none"><button class="full" onclick="checkTyped()">Tekshirish</button>`;
+}
+function answer(btn,value,correct){
+if(answered)return;answered=true;const ok=value===correct;if(ok)data.scores[stage]++;
+document.querySelectorAll(".option").forEach(b=>{b.disabled=true;if(b.textContent===correct)b.classList.add("correct")});if(!ok)btn.classList.add("wrong");showFeedback(ok,correct)
+}
+function pick(i,btn){
+if(answered||chosen.some(x=>x.i===i))return;chosen.push({i,l:letters[i].l});btn.disabled=true;document.getElementById("picked").textContent=chosen.map(x=>x.l).join(" ");
+if(chosen.length===letters.length){const val=chosen.map(x=>x.l).join(""),correct=order[index][0],ok=val===correct;answered=true;if(ok)data.scores[stage]++;showFeedback(ok,correct)}
+}
+function clearLetters(){next()}
+function checkTyped(){
+if(answered)return;const val=document.getElementById("typed").value.trim().toLowerCase();if(!val)return;answered=true;const correct=order[index][0],ok=val===correct;if(ok)data.scores[stage]++;showFeedback(ok,correct)
+}
+function showFeedback(ok,correct){document.getElementById("feedback").innerHTML=ok?"✅ To'g'ri!":"❌ To'g'ri javob: <b>"+correct+"</b>";document.getElementById("actions").innerHTML='<button class="full" onclick="advance()">Keyingisi →</button>'}
+function advance(){index++;next()}
+function finish(){data.done[stage]=true;save();document.getElementById("bar").style.width="100%";document.getElementById("question").innerHTML=`<div class="big">🎉 Tugadi!</div><h2>${data.scores[stage]} / 10</h2><p>${names[stage]}</p>`;document.getElementById("feedback").textContent="Natija saqlandi!";document.getElementById("actions").innerHTML='<button class="full" onclick="home()">Bosh sahifa</button>'}
+function resetAll(){if(confirm("Barcha natijalar o'chirilsinmi?")){data=JSON.parse(JSON.stringify(initial));save();home()}}
+home();
+</script>
+</body>
+</html>
