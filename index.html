@@ -6,6 +6,654 @@ const raw=[
 ['make','made','made','meyk','meyd','meyd','Yasamoq'],['have','had','had','hev','hed','hed','Ega bo‘lmoq'],['do','did','done','du','did','dan','Qilmoq'],['get','got','got','get','got','got','Qo‘lga kiritmoq'],['give','gave','given','giv','geyv','givn','Bermoq'],['find','found','found','faynd','faund','faund','Topmoq'],['think','thought','thought','sink','sot','sot','O‘ylamoq'],['know','knew','known','nou','nyu','noun','Bilmoq'],['run','ran','run','ran','ren','ran','Yugurmoq'],['read','read','read','riid','red','red','O‘qimoq'],
 ['begin','began','begun','bigin','bigen','big an','Boshlamoq'],['break','broke','broken','breyk','brouk','broukn','Sindirmoq'],['bring','brought','brought','bring','brot','brot','Olib kelmoq'],['build','built','built','bild','bilt','bilt','Qurmoq'],['catch','caught','caught','kech','kot','kot','Tutmoq'],['choose','chose','chosen','chuuz','chouz','chouzn','Tanlamoq'],['drive','drove','driven','drayv','drouv','drivn','Haydamoq'],['feel','felt','felt','fiil','felt','felt','His qilmoq'],['leave','left','left','liiv','left','left','Ketmoq'],['meet','met','met','miit','met','met','Uchrashmoq'],
 ['pay','paid','paid','pey','peyd','peyd','To‘lamoq'],['put','put','put','put','put','put','Qo‘ymoq'],['send','sent','sent','send','sent','sent','Yubormoq'],['sell','sold','sold','sel','sould','sould','Sotmoq'],['sit','sat','sat','sit','set','set','O‘tirmoq'],['stand','stood','stood','stend','stud','stud','Turmoq'],['teach','taught','taught','tiich','tot','tot','O‘qitmoq'],['tell','told','told','tel','tould','tould','Aytib bermoq'],['understand','understood','understood','anderstend','anderstud','anderstud','Tushunmoq'],['wear','wore','worn','uer','uor','uorn','Kiymoq']];
+
+const extraIrregular = [
+['forget','forgot','forgotten','forget','forgot','forgotn','Unutmoq'],
+['hear','heard','heard','hir','herd','herd','Eshitmoq'],
+['hold','held','held','hould','held','held','Ushlamoq'],
+['keep','kept','kept','kiip','kept','kept','Saqlamoq'],
+['lose','lost','lost','luuz','lost','lost','Yo‘qotmoq'],
+['win','won','won','vin','van','van','Yutmoq'],
+['swim','swam','swum','svim','svem','svam','Suzmoq'],
+['fly','flew','flown','flay','flu','floun','Uchmoq'],
+['fall','fell','fallen','fol','fel','folen','Yiqilmoq'],
+['cut','cut','cut','kat','kat','kat','Kesmoq'],
+['hit','hit','hit','hit','hit','hit','Urmoq'],
+['hurt','hurt','hurt','hert','hert','hert','Og‘ritmoq'],
+['let','let','let','let','let','let','Ruxsat bermoq'],
+['set','set','set','set','set','set','O‘rnatmoq'],
+['shut','shut','shut','shat','shat','shat','Yopmoq'],
+['cost','cost','cost','kost','kost','kost','Narxi turmoq'],
+['lend','lent','lent','lend','lent','lent','Qarzga bermoq'],
+['spend','spent','spent','spend','spent','spent','Sarflamoq'],
+['bend','bent','bent','bend','bent','bent','Egmoq'],
+['fight','fought','fought','fayt','fot','fot','Jang qilmoq'],
+['light','lit','lit','layt','lit','lit','Yoritmoq'],
+['ride','rode','ridden','rayd','roud','ridn','Minmoq'],
+['rise','rose','risen','rayz','rouz','rizn','Ko‘tarilmoq'],
+['shake','shook','shaken','sheyk','shuk','sheykn','Silkitmoq'],
+['sing','sang','sung','sing','seng','sang','Kuylamoq'],
+['ring','rang','rung','ring','reng','rang','Jiringlamoq'],
+['steal','stole','stolen','stiil','stoul','stouln','O‘g‘irlamoq'],
+['throw','threw','thrown','throu','thruu','throun','Uloqtirmoq'],
+['grow','grew','grown','grou','gruu','groun','O‘smoq'],
+['blow','blew','blown','blou','bluu','bloun','Puflamoq'],
+['draw','drew','drawn','dro','druu','dron','Chizmoq'],
+['show','showed','shown','shou','shoud','shoun','Ko‘rsatmoq'],
+['hide','hid','hidden','hayd','hid','hidn','Yashirmoq'],
+['bite','bit','bitten','bayt','bit','bitn','Tishlamoq'],
+['wake','woke','woken','veyk','vouk','voukn','Uyg‘onmoq'],
+['freeze','froze','frozen','friiz','frouz','frouzn','Muzlamoq'],
+['feed','fed','fed','fiid','fed','fed','Oziqlantirmoq'],
+['lead','led','led','liid','led','led','Yetaklamoq'],
+['mean','meant','meant','miin','ment','ment','Anglatmoq'],
+['deal','dealt','dealt','diil','delt','delt','Muomala qilmoq'],
+['beat','beat','beaten','biit','biit','biitn','Mag‘lub etmoq'],
+['dig','dug','dug','dig','dag','dag','Qazimoq'],
+['hang','hung','hung','heng','hang','hang','Osmoq'],
+['stick','stuck','stuck','stik','stak','stak','Yopishmoq'],
+['strike','struck','struck','strayk','strak','strak','Zarba bermoq'],
+['sweep','swept','swept','sviip','svept','svept','Supurmoq'],
+['weep','wept','wept','viip','vept','vept','Yig‘lamoq'],
+['seek','sought','sought','siik','sot','sot','Izlamoq'],
+['forgive','forgave','forgiven','forgiv','forgeyv','forgivn','Kechirmoq'],
+['become','became','become','bikam','bikeym','bikam','Aylanmoq'],
+['prove','proved','proven','pruuv','pruuvd','pruuvn','Isbotlamoq'],
+['tear','tore','torn','ter','tor','torn','Yirtmoq'],
+['swear','swore','sworn','sver','svor','svorn','Qasam ichmoq'],
+['spread','spread','spread','spred','spred','spred','Tarqatmoq'],
+['split','split','split','split','split','split','Bo‘lmoq'],
+['burst','burst','burst','berst','berst','berst','Yorilmoq'],
+['quit','quit','quit','kvit','kvit','kvit','Tark etmoq'],
+['bet','bet','bet','bet','bet','bet','Garov bog‘lamoq'],
+['cast','cast','cast','kast','kast','kast','Rolga tanlamoq'],
+['broadcast','broadcast','broadcast','brodkast','brodkast','brodkast','Efirga uzatmoq'],
+['overcome','overcame','overcome','ouverkam','ouverkeym','ouverkam','Yengib o‘tmoq'],
+['overtake','overtook','overtaken','ouverteyk','ouvertuk','ouverteykn','Quvib o‘tmoq'],
+['withdraw','withdrew','withdrawn','vizdro','vizdruu','vizdron','Qaytarib olmoq'],
+['rewrite','rewrote','rewritten','rirayt','rirout','riritn','Qayta yozmoq'],
+['redo','redid','redone','riduu','ridid','ridan','Qayta bajarmoq'],
+['undo','undid','undone','anduu','andid','andan','Bekor qilmoq'],
+['misunderstand','misunderstood','misunderstood','misanderstend','misanderstud','misanderstud','Noto‘g‘ri tushunmoq'],
+['mistake','mistook','mistaken','misteyk','mistuk','misteykn','Adashtirmoq'],
+['forbid','forbade','forbidden','forbid','forbeyd','forbidn','Taqiqlamoq'],
+['sink','sank','sunk','sink','senk','sank','Cho‘kmoq'],
+['shrink','shrank','shrunk','shrink','shrenk','shrank','Kichraymoq'],
+['spring','sprang','sprung','spring','spreng','sprang','Sakrab chiqmoq'],
+['sting','stung','stung','sting','stang','stang','Chaqmoq'],
+['swing','swung','swung','sving','svang','svang','Tebranmoq'],
+['creep','crept','crept','kriip','krept','krept','Emaklamoq'],
+['flee','fled','fled','flii','fled','fled','Qochmoq'],
+['grind','ground','ground','graynd','graund','graund','Maydalamoq'],
+['bind','bound','bound','baynd','baund','baund','Bog‘lamoq'],
+['wind','wound','wound','vaynd','vaund','vaund','O‘ramoq'],
+['bleed','bled','bled','bliid','bled','bled','Qonamoq']
+];
+
+const regularText = `
+accept|Qabul qilmoq
+achieve|Erishmoq
+act|Harakat qilmoq
+add|Qo‘shmoq
+admire|Havas qilmoq
+admit|Tan olmoq
+advise|Maslahat bermoq
+afford|Qurbi yetmoq
+agree|Rozi bo‘lmoq
+allow|Ijozat bermoq
+answer|Javob bermoq
+appear|Paydo bo‘lmoq
+apply|Ariza bermoq
+argue|Bahslashmoq
+arrange|Tashkil qilmoq
+arrive|Yetib kelmoq
+ask|So‘ramoq
+attach|Biriktirmoq
+attempt|Urinmoq
+attend|Qatnashmoq
+avoid|Chetlanmoq
+bake|Pishirmoq
+balance|Muvozanatlamoq
+bathe|Cho‘milmoq
+believe|Ishonmoq
+belong|Tegishli bo‘lmoq
+borrow|Qarzga olmoq
+bother|Bezovta qilmoq
+breathe|Nafas olmoq
+brush|Cho‘tkalamoq
+burn|Yonmoq
+call|Qo‘ng‘iroq qilmoq
+cancel|Bekor etmoq
+care|G‘amxo‘rlik qilmoq
+carry|Tashimoq
+celebrate|Nishonlamoq
+change|O‘zgartirmoq
+check|Tekshirmoq
+clean|Tozalamoq
+climb|Tirmashmoq
+close|Yopmoq
+collect|Yig‘moq
+compare|Taqqoslamoq
+complain|Shikoyat qilmoq
+complete|Tugatmoq
+connect|Ulamoq
+consider|Ko‘rib chiqmoq
+continue|Davom ettirmoq
+cook|Ovqat pishirmoq
+copy|Nusxalamoq
+correct|Tuzatmoq
+count|Sanamoq
+cover|Qoplamoq
+create|Yaratmoq
+cross|Kesib o‘tmoq
+cry|Yig‘lamoq
+dance|Raqsga tushmoq
+decide|Qaror qilmoq
+deliver|Yetkazib bermoq
+depend|Bog‘liq bo‘lmoq
+describe|Tasvirlamoq
+design|Loyihalamoq
+develop|Rivojlantirmoq
+die|Vafot etmoq
+disagree|Rozi bo‘lmaslik
+discover|Kashf qilmoq
+discuss|Muhokama qilmoq
+divide|Taqsimlamoq
+download|Yuklab olmoq
+dream|Tush ko‘rmoq
+dress|Kiyinmoq
+drop|Tushirib yubormoq
+dry|Quritmoq
+earn|Pul topmoq
+educate|Ta’lim bermoq
+encourage|Ruhlantirmoq
+end|Yakunlamoq
+enjoy|Zavqlanmoq
+enter|Kirmoq
+escape|Qutulmoq
+examine|Tekshirib chiqmoq
+exist|Mavjud bo‘lmoq
+expect|Kutmoq
+explain|Tushuntirmoq
+explore|O‘rganib chiqmoq
+fail|Muvaffaqiyatsiz bo‘lmoq
+fill|To‘ldirmoq
+finish|Tugatmoq
+fix|Ta’mirlamoq
+follow|Ergashmoq
+force|Majburlamoq
+guess|Taxmin qilmoq
+happen|Sodir bo‘lmoq
+hate|Yomon ko‘rmoq
+help|Yordam bermoq
+hope|Umid qilmoq
+imagine|Tasavvur qilmoq
+improve|Yaxshilamoq
+include|O‘z ichiga olmoq
+increase|Oshirmoq
+inform|Xabar bermoq
+install|O‘rnatmoq
+introduce|Tanishtirmoq
+invite|Taklif qilmoq
+join|Qo‘shilmoq
+jump|Sakramoq
+kick|Tepmoq
+kiss|O‘pmoq
+knock|Taqillatmoq
+laugh|Kulmoq
+learn|O‘rganmoq
+like|Yoqtirmoq
+listen|Tinglamoq
+live|Yashamoq
+lock|Qulflamoq
+look|Qaramoq
+love|Sevmoq
+manage|Boshqarmoq
+mark|Belgilamoq
+marry|Turmush qurmoq
+measure|O‘lchamoq
+mention|Tilga olmoq
+miss|Sog‘inmoq
+move|Siljimoq
+need|Muhtoj bo‘lmoq
+notice|Payqamoq
+offer|Taklif etmoq
+open|Ochmoq
+order|Buyurtma bermoq
+organize|Uyushtirmoq
+own|Egalik qilmoq
+pack|Joylamoq
+paint|Bo‘yamoq
+park|Mashina qo‘ymoq
+pass|O‘tmoq
+pick|Tanlab olmoq
+plan|Rejalashtirmoq
+play|O‘ynamoq
+point|Ishora qilmoq
+practice|Mashq qilmoq
+prefer|Afzal ko‘rmoq
+prepare|Tayyorlamoq
+present|Taqdim etmoq
+print|Chop etmoq
+promise|Va’da bermoq
+protect|Himoya qilmoq
+pull|Tortmoq
+push|Itarmoq
+rain|Yomg‘ir yog‘moq
+reach|Yetmoq
+receive|Qabul qilib olmoq
+record|Yozib olmoq
+reduce|Kamaytirmoq
+refuse|Rad etmoq
+remember|Eslamoq
+remove|Olib tashlamoq
+repair|Tuzatmoq
+repeat|Takrorlamoq
+replace|Almashtirmoq
+reply|Javob qaytarmoq
+report|Hisobot bermoq
+require|Talab qilmoq
+rest|Dam olmoq
+return|Qaytmoq
+save|Saqlamoq
+search|Qidirmoq
+seem|Tuyulmoq
+share|Bo‘lishmoq
+shop|Xarid qilmoq
+shout|Baqirmoq
+sign|Imzolamoq
+smile|Tabassum qilmoq
+solve|Yechmoq
+start|Boshlamoq
+stay|Qolmoq
+stop|To‘xtamoq
+study|O‘qib o‘rganmoq
+suggest|Taklif bildirmoq
+support|Qo‘llab-quvvatlamoq
+surprise|Hayratlantirmoq
+talk|Suhbatlashmoq
+taste|Tatib ko‘rmoq
+test|Sinamoq
+thank|Rahmat aytmoq
+touch|Tegmoq
+train|Mashq qildirmoq
+translate|Tarjima qilmoq
+travel|Sayohat qilmoq
+trust|Ishonch bildirmoq
+try|Harakat qilib ko‘rmoq
+turn|Burilmoq
+type|Klaviaturada yozmoq
+use|Foydalanmoq
+visit|Tashrif buyurmoq
+wait|Kutib turmoq
+walk|Piyoda yurmoq
+want|Xohlamoq
+wash|Yuvmoq
+watch|Tomosha qilmoq
+wish|Tilamoq
+work|Ishlamoq
+worry|Xavotirlanmoq
+abandon|Tashlab ketmoq
+absorb|Singdirmoq
+abuse|Suiiste’mol qilmoq
+accelerate|Tezlashtirmoq
+accompany|Hamrohlik qilmoq
+accuse|Ayblamoq
+adapt|Moslashtirmoq
+adjust|Sozlamoq
+adopt|Qabul etmoq
+advertise|Reklama qilmoq
+affect|Ta’sir qilmoq
+announce|E’lon qilmoq
+apologize|Uzr so‘ramoq
+approve|Tasdiqlamoq
+arrest|Hibsga olmoq
+assist|Ko‘maklashmoq
+assume|Faraz qilmoq
+assure|Ishontirmoq
+attract|Jalb qilmoq
+authorize|Vakolat bermoq
+ban|Man qilmoq
+beg|Yolvormoq
+blame|Aybdor qilmoq
+boil|Qaynatmoq
+book|Band qilmoq
+bounce|Sapchimoq
+bow|Ta’zim qilmoq
+bury|Ko‘mmoq
+calculate|Hisoblamoq
+capture|Qo‘lga olmoq
+challenge|Bellashuvga chaqirmoq
+charge|Haq olmoq
+chase|Quvmoq
+chat|Suhbat qurmoq
+cheat|Aldamoq
+cheer|Olqishlamoq
+chew|Chaynamoq
+claim|Da’vo qilmoq
+classify|Tasniflamoq
+combine|Birlashtirmoq
+command|Buyurmoq
+communicate|Muloqot qilmoq
+compete|Musobaqalashmoq
+concentrate|Diqqatni jamlamoq
+confirm|Tasdiq bermoq
+confuse|Chalkashtirmoq
+congratulate|Tabriklamoq
+consist|Iborat bo‘lmoq
+contain|Ichiga olmoq
+contribute|Hissa qo‘shmoq
+control|Nazorat qilmoq
+convert|O‘zgartirib aylantirmoq
+convince|Ko‘ndirmoq
+cough|Yo‘talmoq
+crash|To‘qnashmoq
+crawl|Emaklamoq
+criticize|Tanqid qilmoq
+damage|Shikastlamoq
+decorate|Bezamoq
+delay|Kechiktirmoq
+delete|O‘chirmoq
+deny|Inkor qilmoq
+destroy|Vayron qilmoq
+detect|Aniqlamoq
+determine|Belgilab olmoq
+disappear|Yo‘qolmoq
+disappoint|Hafsalasini pir qilmoq
+disconnect|Uzib qo‘ymoq
+disturb|Xalaqit bermoq
+drag|Sudramoq
+edit|Tahrirlamoq
+elect|Saylamoq
+employ|Ishga olmoq
+enable|Imkon bermoq
+engage|Jalb etmoq
+ensure|Ta’minlamoq
+establish|Asos solmoq
+estimate|Baholamoq
+evaluate|Tahliliy baholamoq
+exchange|Ayirboshlamoq
+excuse|Uzrini qabul qilmoq
+exercise|Mashq bajarmoq
+expand|Kengaytirmoq
+experience|Boshdan kechirmoq
+export|Eksport qilmoq
+express|Ifodalamoq
+extend|Uzaytirmoq
+face|Yuzlashmoq
+fasten|Mahkamlamoq
+fear|Qo‘rqmoq
+fetch|Olib kelmoq
+file|Fayllamoq
+film|Tasvirga olmoq
+float|Qalqimoq
+fold|Buklamoq
+form|Shakllantirmoq
+found|Asos solmoq
+frame|Ramkaga solmoq
+fry|Qovurmoq
+gather|To‘plamoq
+generate|Hosil qilmoq
+govern|Idora qilmoq
+grab|Changallamoq
+greet|Salomlashmoq
+guard|Qo‘riqlamoq
+guide|Yo‘l ko‘rsatmoq
+handle|Uddalamoq
+heat|Isitmoq
+hire|Yollamoq
+hunt|Ov qilmoq
+identify|Kimligini aniqlamoq
+ignore|E’tiborsiz qoldirmoq
+illustrate|Misol bilan ko‘rsatmoq
+import|Import qilmoq
+impress|Taassurot qoldirmoq
+indicate|Ko‘rsatib bermoq
+influence|Ta’sir o‘tkazmoq
+inject|Inyeksiya qilmoq
+injure|Jarohatlamoq
+inspect|Ko‘zdan kechirmoq
+intend|Niyat qilmoq
+interrupt|Gapini bo‘lmoq
+invent|Ixtiro qilmoq
+invest|Sarmoya kiritmoq
+involve|Jalb qilmoq
+iron|Dazmollamoq
+joke|Hazillashmoq
+judge|Hukm qilmoq
+label|Yorliq qo‘ymoq
+land|Qo‘nmoq
+last|Davom etmoq
+launch|Ishga tushirmoq
+lift|Ko‘tarmoq
+limit|Cheklamoq
+link|Bog‘lamoq
+load|Yuklamoq
+locate|Joyini aniqlamoq
+mail|Pochta orqali yubormoq
+maintain|Saqlab turmoq
+match|Mos kelmoq
+melt|Erimoq
+memorize|Yodlamoq
+mend|Yamamoq
+mix|Aralashtirmoq
+monitor|Kuzatib bormoq
+multiply|Ko‘paytirmoq
+name|Nomlamoq
+navigate|Yo‘nalish topmoq
+negotiate|Muzokara qilmoq
+nod|Bosh irg‘amoq
+obey|Bo‘ysunmoq
+observe|Kuzatmoq
+obtain|Qo‘lga kiritmoq
+occur|Ro‘y bermoq
+operate|Ishlatmoq
+oppose|Qarshi chiqmoq
+participate|Ishtirok etmoq
+pause|Vaqtincha to‘xtatmoq
+perform|Ijro etmoq
+permit|Ruxsat etmoq
+persuade|Ko‘ndirmoq
+phone|Telefon qilmoq
+photograph|Suratga olmoq
+place|Joylashtirmoq
+plant|Ekmoq
+polish|Jilolamoq
+possess|Ega bo‘lmoq
+pour|Quymoq
+predict|Bashorat qilmoq
+prevent|Oldini olmoq
+produce|Ishlab chiqarmoq
+program|Dasturlamoq
+promote|Targ‘ib qilmoq
+pronounce|Talaffuz qilmoq
+publish|Nashr qilmoq
+purchase|Xarid qilmoq
+qualify|Malaka olmoq
+question|Savol bermoq
+queue|Navbatda turmoq
+raise|Ko‘tarmoq
+recognize|Tanimoq
+recommend|Tavsiya qilmoq
+recycle|Qayta ishlamoq
+register|Ro‘yxatdan o‘tkazmoq
+regret|Afsuslanmoq
+reject|Rad qilmoq
+relax|Hordiq chiqarmoq
+release|Ozod qilmoq
+rely|Tayanmoq
+remain|Qolmoq
+remind|Eslatmoq
+rent|Ijaraga olmoq
+request|So‘rab murojaat qilmoq
+rescue|Qutqarmoq
+research|Tadqiq qilmoq
+reserve|Band qilib qo‘ymoq
+resist|Qarshilik ko‘rsatmoq
+respect|Hurmat qilmoq
+respond|Javob bermoq
+retire|Nafaqaga chiqmoq
+review|Qayta ko‘rib chiqmoq
+risk|Tavakkal qilmoq
+roll|Dumalatmoq
+rub|Ishqalamoq
+rush|Shoshilmoq
+sail|Kemada suzmoq
+satisfy|Qoniqtirmoq
+schedule|Jadval tuzmoq
+score|Ball olmoq
+scratch|Tirnamoq
+scream|Qichqirmoq
+select|Saralamoq
+separate|Ajratmoq
+serve|Xizmat qilmoq
+settle|Joylashmoq
+shape|Shakl bermoq
+sigh|Xo‘rsinmoq
+signal|Belgi bermoq
+ski|Chang‘ida uchmoq
+skip|O‘tkazib yubormoq
+smell|Hidlamoq
+smoke|Tutun chiqarmoq
+snow|Qor yog‘moq
+sort|Saralab chiqmoq
+sound|Yangramoq
+spell|Harflab aytmoq
+spill|To‘kmoq
+spray|Purkammoq
+squeeze|Siqmoq
+stare|Tikilmoq
+step|Qadam bosmoq
+store|Omborda saqlamoq
+stretch|Cho‘zmoq
+succeed|Muvaffaqiyatga erishmoq
+suffer|Azob chekmoq
+supply|Yetkazib ta’minlamoq
+suppose|Faraz etmoq
+survive|Omon qolmoq
+switch|Almashtirib yoqmoq
+tap|Yengil taqillatmoq
+tend|Moyil bo‘lmoq
+tie|Bog‘lab qo‘ymoq
+tolerate|Toqat qilmoq
+trace|Izidan bormoq
+trade|Savdo qilmoq
+transfer|O‘tkazmoq
+transform|Tubdan o‘zgartirmoq
+transport|Tashib yetkazmoq
+treat|Davolamoq
+trick|Laqillatmoq
+trim|Qirqib tekislamoq
+update|Yangilamoq
+upload|Yuklamoq
+unlock|Qulfni ochmoq
+unpack|Yukni ochmoq
+upgrade|Takomillashtirmoq
+urge|Undamoq
+value|Qadrlamoq
+vanish|G‘oyib bo‘lmoq
+vary|Turlicha bo‘lmoq
+vote|Ovoz bermoq
+warn|Ogohlantirmoq
+wave|Qo‘l silkitmoq
+weigh|Tortib o‘lchamoq
+welcome|Kutib olmoq
+whisper|Pichirlamoq
+whistle|Hushtak chalmoq
+wipe|Artmoq
+wonder|Qiziqmoq
+wrap|O‘ramoq
+yawn|Esnamoq
+yell|Baqirib yubormoq
+zoom|Masshtabni o‘zgartirmoq
+activate|Faollashtirmoq
+analyze|Tahlil qilmoq
+archive|Arxivlamoq
+assemble|Yig‘ib yasamoq
+automate|Avtomatlashtirmoq
+backup|Zaxiralamoq
+blink|Ko‘z pirpiratmoq
+block|Bloklamoq
+browse|Ko‘rib chiqmoq
+click|Bosmoq
+clone|Klonlamoq
+code|Kod yozmoq
+compile|Kompilyatsiya qilmoq
+compress|Siqib ixchamlamoq
+configure|Konfiguratsiya qilmoq
+customize|Moslab sozlamoq
+debug|Dastur xatosini tuzatmoq
+deploy|Ishga joylashtirmoq
+disable|Faolsizlantirmoq
+display|Ekranda ko‘rsatmoq
+duplicate|Nusxasini yaratmoq
+encrypt|Shifrlamoq
+filter|Filtrlamoq
+format|Formatlamoq
+initialize|Boshlang‘ich sozlamoq
+integrate|Birlashtirib ulamoq
+log|Qayd qilmoq
+merge|Qo‘shib birlashtirmoq
+mute|Ovozni o‘chirmoq
+optimize|Optimallashtirmoq
+process|Qayta ishlamoq
+refresh|Yangidan yuklamoq
+render|Tasvir hosil qilmoq
+reset|Qayta sozlamoq
+restart|Qayta ishga tushirmoq
+restore|Tiklamoq
+scan|Skanerlamoq
+scroll|Sahifani surmoq
+simulate|Simulyatsiya qilmoq
+sync|Sinxronlamoq
+toggle|Holatini almashtirmoq
+validate|Yaroqliligini tekshirmoq
+verify|To‘g‘riligini tekshirmoq
+visualize|Ko‘rgazmali tasvirlamoq
+`;
+
+const doubleEnding = new Set([
+'admit','occur','permit','regret',
+'plan','stop','drop','shop','grab',
+'chat','beg','nod','rub','step',
+'trim','skip','tap','ban','drag',
+'control','prefer'
+]);
+
+function makePast(w){
+ if(w.endsWith('e')) return w+'d';
+ if(/[^aeiou]y$/.test(w))
+   return w.slice(0,-1)+'ied';
+ if(doubleEnding.has(w))
+   return w+w.slice(-1)+'ed';
+ return w+'ed';
+}
+
+const extraRegular = regularText
+.trim()
+.split('\n')
+.map(line=>{
+ const [w,uz]=line.split('|');
+ const past=makePast(w);
+ return [w,past,past,
+ '🔊','🔊','🔊',uz];
+});
+
+const existingVerbs = new Set(
+ raw.map(x=>x[0])
+);
+
+for(const item of [
+ ...extraIrregular,
+ ...extraRegular
+]){
+ if(raw.length>=500) break;
+ if(!existingVerbs.has(item[0])){
+   raw.push(item);
+   existingVerbs.add(item[0]);
+ }
+}
+
 const verbs=raw.map(x=>({v:x.slice(0,3),p:x.slice(3,6),uz:x[6]})), intervals=[1,3,7,30],key='felmaster_progress_v2';
 let data;try{data=JSON.parse(localStorage.getItem(key))||{learned:{}}}catch{data={learned:{}}}if(!data.learned)data.learned={};
 const screen=document.querySelector('#screen'),progress=document.querySelector('#progress');
